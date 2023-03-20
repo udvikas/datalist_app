@@ -13,19 +13,37 @@ const AddUser = (props) => {
 
  const nameInputRefs = useRef()
  const ageInputRefs = useRef()
-
+ const collegeInputRefs = useRef()
+ 
   const addUserHandler = (event) => {
     event.preventDefault();
     const enteredName = nameInputRefs.current.value;
     const enteredUserAge = ageInputRefs.current.value;
+    const enteredCollege = collegeInputRefs.current.value;
 
-    if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
+    if (enteredName.trim().length === 0) {
       setError({
         title: "Invalid input",
-        message: "Please enter a valid name & age (Non-empty value)",
+        message: "Please enter a valid name (Non-empty value)",
       });
       return;
     }
+
+    if (enteredUserAge.trim().length === 0 ) {
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid age  (Non-empty value)",
+      });
+      return;
+    }
+   if (enteredCollege.trim().length === 0) {
+      setError({
+        title: "Invalid input",
+        message: "Please enter a valid college Name (Non-empty value)",
+      });
+      return;
+    }
+
     if (+enteredUserAge < 1) {
       setError({
         title: "Invalid age",
@@ -33,11 +51,13 @@ const AddUser = (props) => {
       });
       return;
     }
-    props.onAddUser(enteredName, enteredUserAge);
+
+    props.onAddUser(enteredName, enteredUserAge, enteredCollege);
     // setEnteredUsername("");
     // setEnteredAge("");
     nameInputRefs.current.value = "";
     ageInputRefs.current.value = "";
+    collegeInputRefs.current.value = "";
   };
 
   // const usernameChangeHandler = (event) => {
@@ -76,6 +96,14 @@ const AddUser = (props) => {
             // value={enteredAge}
             // onChange={ageChangeHandler}
             ref={ageInputRefs}
+          />
+           <label htmlFor="collegename">College Name</label>
+          <input
+            id="collegename"
+            type="text"
+            // value={enteredUsername}
+            // onChange={usernameChangeHandler}
+            ref={collegeInputRefs}
           />
           <Button type="submit">Add User</Button>
         </form>
